@@ -1,0 +1,40 @@
+(
+  firmware: UEFI,
+  disks: [
+    (
+      path: "/dev/sda",
+      table: "GPT",
+      partitions: [
+        (
+          name: "efi",
+          size_gb: 0.5,
+          fs: "vfat",
+          flags: ["boot", "esp"],
+        ),
+        (
+          name: "cryptlvm",
+          size_gb: None,
+          luks: true,
+        ),
+      ],
+    ),
+  ],
+  lvm: (
+    vg: "vg0",
+    volumes: [
+      (name: "root", size_gb: 20.0, fs: "ext4"),
+      (name: "swap", size_gb: 4.0, fs: "swap"),
+    ],
+  ),
+  kernel: (
+    name: "linux",
+    initramfs_hooks: ["base", "udev", "autodetect", "keyboard", "keymap", "encrypt", "lvm2", "filesystems"],
+    parameters: ["quiet", "loglevel=3"],
+    firmware: true,
+  ),
+  bootloader: (
+    type: "systemd-boot",
+    theme: None,
+  ),
+  packages: ["vim", "git", "htop"],
+)

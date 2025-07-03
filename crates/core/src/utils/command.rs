@@ -24,9 +24,18 @@ impl CommandRunner {
         }
     }
 
-    /// Add arguments to the new command
+    /// Add argument to the new command
     pub fn arg<S: Into<String>>(mut self, arg: S) -> Self {
         self.args.push(arg.into());
+        self
+    }
+
+    pub fn args<I, S>(mut self, arguments: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: Into<String>,
+    {
+        self.args.extend(arguments.into_iter().map(Into::into));
         self
     }
 
@@ -43,7 +52,7 @@ impl CommandRunner {
     }
 
     /// Run the command
-    pub fn run(self) -> Result<Option<String>> {
+    pub fn run(self) -> Result<String> {
         // Build program + args
         let mut cmd = if self.sudo {
             let mut c = Command::new("sudo");
@@ -67,7 +76,7 @@ impl CommandRunner {
                 if !status.success() {
                     anyhow::bail!("{} exited with {}", self.program, status);
                 }
-                Ok(None)
+                Ok(String::new())
             }
             RunMode::Capture => {
                 let output = cmd
@@ -81,9 +90,8 @@ impl CommandRunner {
                         String::from_utf8_lossy(&output.stderr)
                     );
                 }
-                let stdout = String::from_utf8(output.stdout)
-                    .context("failed to parse stdout as UTF-8")?;
-                Ok(Some(stdout))
+                String::from_utf8(output.stdout)
+                    .context("failed to parse stdout as UTF-8")
             }
 
         }

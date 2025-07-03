@@ -1,6 +1,6 @@
 use std::{fs, path::PathBuf, path::Path};
 use anyhow::{Result, Context};
-use serde::{Serialize, Deserialize};
+use serde::Deserialize;
 use ron::{Options, extensions::Extensions};
 
 #[derive(Debug, Deserialize, Clone)]

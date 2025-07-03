@@ -5,4 +5,5 @@ edition = "2024"
 
 [dependencies]
 core = { path = "../core" }
-installer = { path = "../installer" }
+installer = { path = "../manager" }
+anyhow = "1.0"

@@ -1,7 +1,7 @@
 [workspace]
 members = [
   "crates/core",
-  "crates/installer",
+  "crates/manager",
   "crates/daemon",
 ]
 resolver = "3"

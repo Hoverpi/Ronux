@@ -7,4 +7,4 @@ edition = "2024"
 ron = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 anyhow = "1.0"
-
+serde_json = "1.0"

@@ -7,8 +7,8 @@
       partitions: [
         (
           name: "efi",
-          size_gb: 0.5,
-          fs: "vfat",
+          size_gb: 1,
+          fs: "fat32",
           flags: ["boot", "esp"],
         ),
         (

@@ -1,4 +1,4 @@
-use crate::config::Config;
+use crate::model::Config;
 use anyhow::Result;
 
 pub trait Configurable {
